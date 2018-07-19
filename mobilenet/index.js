@@ -1,1 +1,1 @@
-let model = tf.loadModel('../model/model.json');
+let model = tf.loadModel('https://raw.githubusercontent.com/shivangidas/image-classifier/master/model/model.json');

@@ -1,1 +1,3 @@
 /kerasModel
+*.tgz
+/mobilenet_v1_0.25_128
