@@ -1,7 +1,7 @@
 const MODEL_URL =
-  "https://raw.githubusercontent.com/shivangidas/image-classifier/master/model/tensorflowjs_model.pb";
+  "https://raw.githubusercontent.com/shivangidas/image-classifier/master/modelv1/tensorflowjs_model.pb";
 const WEIGHTS_URL =
-  "https://raw.githubusercontent.com/shivangidas/image-classifier/master/model/weights_manifest.json";
+  "https://raw.githubusercontent.com/shivangidas/image-classifier/master/modelv1/weights_manifest.json";
 let model;
 let IMAGENET_CLASSES = [];
 (async () => {
@@ -32,9 +32,9 @@ function readURL(input) {
       let imageData = document.getElementById("imageSrc");
       let pixels = tf
         .fromPixels(imageData)
-        .resizeNearestNeighbor([128, 128])
+        .resizeNearestNeighbor([224, 224])
         .toFloat();
-      let offset = tf.scalar(64);
+      let offset = tf.scalar(128);
       pixels = pixels
         .sub(offset)
         .div(offset)
