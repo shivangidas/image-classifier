@@ -1,18 +1,23 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>Deep Learning</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    
-</head>
-<body>
-    <img src="https://raw.githubusercontent.com/shivangidas/image-classifier/master/cat.jpg" alt="cat" id="imageSrc" crossorigin="anonymous"  />
-    <h2>Predictions</h2>
-    <ol class="predictionList"></ol>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@0.12.0"> </script>
     <script src="index.js"></script>
+</head>
+
+<body>
+    <!-- <img src="https://raw.githubusercontent.com/shivangidas/image-classifier/master/cat.jpg" alt="cat" id="imageSrc" crossorigin="anonymous"  /> -->
+    <input type="file" id="inputImage" onchange="readURL(this)">
+    <img src="" alt="selected image" id="imageSrc" />
+    <h2>Predictions</h2>
+    <ol class="predictionList"></ol>
+
 </body>
+
 </html>
