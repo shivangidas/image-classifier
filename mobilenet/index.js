@@ -4,6 +4,7 @@ const WEIGHTS_URL =
   "https://raw.githubusercontent.com/shivangidas/image-classifier/master/modelv1/weights_manifest.json";
 let model;
 let IMAGENET_CLASSES = [];
+let offset = tf.scalar(128);
 (async () => {
   $.getJSON(
     "https://raw.githubusercontent.com/shivangidas/image-classifier/master/mobilenet/imagenet_classes.json",
@@ -15,6 +16,7 @@ let IMAGENET_CLASSES = [];
   );
 
   model = await tf.loadFrozenModel(MODEL_URL, WEIGHTS_URL);
+  //console.log("After model is loaded: " + tf.memory().numTensors);
 })();
 function readURL(input) {
   if (input.files && input.files[0]) {
@@ -28,19 +30,25 @@ function readURL(input) {
     };
 
     reader.readAsDataURL(input.files[0]);
-    reader.onloadend = async function() {
-      let imageData = document.getElementById("imageSrc");
-      let pixels = tf
-        .fromPixels(imageData)
-        .resizeNearestNeighbor([224, 224])
-        .toFloat();
-      let offset = tf.scalar(128);
-      pixels = pixels
-        .sub(offset)
-        .div(offset)
-        .expandDims();
-      const output = await model.predict(pixels).data();
+    //console.log("After image is loaded: " + tf.memory().numTensors);
 
+    reader.onloadend = async function() {
+      console.log("Before predictions: " + tf.memory().numTensors);
+
+      let imageData = document.getElementById("imageSrc");
+
+      //console.log("After offset: " + tf.memory().numTensors);
+      let pixels1 = tf.fromPixels(imageData);
+      let pixel2 = pixels1.resizeNearestNeighbor([224, 224]);
+      let pixel3 = pixel2.toFloat();
+      console.log("After pixels are formed: " + tf.memory().numTensors);
+
+      let pixels = pixel3.sub(offset);
+      let pixels4 = pixels.div(offset);
+      let pixels5 = pixels4.expandDims();
+      console.log("After pre-processing: " + tf.memory().numTensors);
+
+      const output = await model.predict(pixels5).data();
       const predictions = Array.from(output)
         .map(function(p, i) {
           return {
@@ -57,6 +65,15 @@ function readURL(input) {
         html += "<li>" + predictions[i].classname + "</li>";
       }
       $(".predictionList").html(html);
+      console.log("After predictions: " + tf.memory().numTensors);
+
+      pixels.dispose();
+      pixels1.dispose();
+      pixel2.dispose();
+      pixel3.dispose();
+      pixels4.dispose();
+      pixels5.dispose();
+      console.log("After dispose: " + tf.memory().numTensors);
     };
   }
 }
