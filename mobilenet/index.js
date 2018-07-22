@@ -48,8 +48,9 @@ function readURL(input) {
       let pixels5 = pixels4.expandDims();
       console.log("After pre-processing: " + tf.memory().numTensors);
 
-      const output = await model.predict(pixels5).data();
-      const predictions = Array.from(output)
+      const output = await model.predict(pixels5);
+      console.log("After output: " + tf.memory().numTensors);
+      const predictions = Array.from(output.dataSync())
         .map(function(p, i) {
           return {
             probabilty: p,
@@ -73,6 +74,7 @@ function readURL(input) {
       pixel3.dispose();
       pixels4.dispose();
       pixels5.dispose();
+      output.dispose();
       console.log("After dispose: " + tf.memory().numTensors);
     };
   }
