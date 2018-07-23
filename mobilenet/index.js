@@ -17,6 +17,7 @@ async function loadModelAndClasses() {
   model = await tf.loadFrozenModel(MODEL_URL, WEIGHTS_URL);
   //console.log("After model is loaded: " + tf.memory().numTensors);
   $(".loadingDiv").hide();
+  $("#inputImage").attr("disabled", false);
 }
 loadModelAndClasses();
 function readURL(input) {
