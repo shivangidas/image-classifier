@@ -5,7 +5,7 @@ const WEIGHTS_URL =
 let model;
 let IMAGENET_CLASSES = [];
 let offset = tf.scalar(128);
-(async () => {
+async function loadModelAndClasses() {
   $.getJSON(
     "https://raw.githubusercontent.com/shivangidas/image-classifier/master/mobilenet/imagenet_classes.json",
     function(data) {
@@ -14,10 +14,11 @@ let offset = tf.scalar(128);
       });
     }
   );
-
   model = await tf.loadFrozenModel(MODEL_URL, WEIGHTS_URL);
   //console.log("After model is loaded: " + tf.memory().numTensors);
-})();
+  $(".loadingDiv").hide();
+}
+loadModelAndClasses();
 function readURL(input) {
   if (input.files && input.files[0]) {
     var reader = new FileReader();
