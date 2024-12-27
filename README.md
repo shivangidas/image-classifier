@@ -5,5 +5,3 @@ Works best with images of size 224 x 224
 
 Blog: http://shivangidas.blogspot.com/2018/07/using-mobilenet-with-tensorflowjs.html
 
-Demo: https://shivangidas.herokuapp.com/imageClassifier/index.html
-
